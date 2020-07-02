@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class CanController : MonoBehaviour
 {
-	[SerializeField] Renderer selfRender;
+	[SerializeField] Renderer visualRender;
 	[SerializeField] SphereCollider selfSphereCollider;
+	[SerializeField] GameObject visualGameObject;
 
 	List<CanController> canControllers;
 
@@ -15,6 +16,12 @@ public class CanController : MonoBehaviour
 	private void Start()
 	{
 		InitCan();
+	}
+
+
+	void DoRaycast()
+	{
+
 	}
 
 
@@ -70,7 +77,7 @@ public class CanController : MonoBehaviour
 
 	void SetNewColor()
 	{
-		selfRender.material.color = GetRandomColor();
+		visualRender.material.color = GetRandomColor();
 	}
 
 	private string GetNewTagForCanself(int newIndex)
