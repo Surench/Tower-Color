@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
 	[SerializeField] Rigidbody rb;
 	[SerializeField] GameObject bullet;
@@ -10,30 +10,46 @@ public class ProjectileController : MonoBehaviour
 	public LayerMask layer;
 	public GameObject cursor;
 
-	public Vector3 newPos;
+	private Queue<GameObject> availableObjects = new Queue<GameObject>();
+	private Ray ray;
+	private RaycastHit hit;
+
+
+	
 	private void Update()
 	{
 		InitProjectile();
 	}
+		
+
 
 	void InitProjectile()
 	{
-		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-		RaycastHit hit;
+		ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
 		Debug.DrawRay(ray.origin, ray.direction * 30, Color.red);
 		if (Physics.Raycast(ray, out hit,100 ))
 		{
 			if (Input.GetMouseButtonDown(0))
 			{
-				Vector3 Vo = CalcualateVelocity(hit.point, transform.position , 0.4f);
+				Vector3 Vo = CalcualateVelocity(hit.point, transform.position , 1f);
 
-				GameObject ob = Instantiate(bullet, transform.position, Quaternion.identity);
-				Rigidbody rb = ob.GetComponent<Rigidbody>();
-				rb.velocity = Vo;
-			}	
-		
+				var newBullet = ShotPool.self.Get();
+				
+				ShootBullet(newBullet.gameObject, Vo);				
+			}
+
 		}
+	}
+
+
+	void ShootBullet(GameObject bullet, Vector3 velocity)
+	{
+		Rigidbody rb = bullet.GetComponent<Rigidbody>();
+		bullet.transform.position = transform.position;
+		bullet.transform.rotation = Quaternion.identity;
+		bullet.gameObject.SetActive(true);
+		rb.velocity = velocity;
 	}
 
 	Vector3 CalcualateVelocity (Vector3 target, Vector3 origin , float time)
