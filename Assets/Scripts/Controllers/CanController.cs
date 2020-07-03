@@ -36,8 +36,13 @@ public class CanController : MonoBehaviour
 	public void BallHit()
 	{
 		ActivateSelfCan();
-		GameManager.self.sceneManager.AddSimilarCansToTheList(this );
+		SearchSimilarCans();
+	}
+
+	public void SearchSimilarCans()
+	{
 		FindeNearSimilarCan();
+		SearchDone();
 	}
 
 
@@ -51,14 +56,19 @@ public class CanController : MonoBehaviour
 		DoRaycast(leftPoint.position, -leftPoint.up); // Left Down
 	}
 
+	void SearchDone()
+	{
+		GameManager.self.sceneManager.SearchingOfSimilarCansDone();
+	}
+
 	void DebugDrawRay()
 	{
-		Debug.DrawRay(visualGameObject.transform.position, visualGameObject.transform.TransformDirection(Vector3.right) * 1, Color.red);
-		Debug.DrawRay(visualGameObject.transform.position, visualGameObject.transform.TransformDirection(-Vector3.right) * 1, Color.red);
-		Debug.DrawRay(rightPoint.position, rightPoint.up * 1, Color.red);
-		Debug.DrawRay(rightPoint.position, -rightPoint.up * 1, Color.red);
-		Debug.DrawRay(leftPoint.position, leftPoint.up * 1, Color.red);
-		Debug.DrawRay(leftPoint.position, -leftPoint.up * 1, Color.red);
+		Debug.DrawRay(visualGameObject.transform.position, visualGameObject.transform.TransformDirection(Vector3.right) * 5, Color.green);
+		Debug.DrawRay(visualGameObject.transform.position, visualGameObject.transform.TransformDirection(-Vector3.right) * 5, Color.green);
+		//Debug.DrawRay(rightPoint.position, rightPoint.up * 1, Color.red);
+		//Debug.DrawRay(rightPoint.position, -rightPoint.up * 1, Color.red);
+		//Debug.DrawRay(leftPoint.position, leftPoint.up * 1, Color.red);
+		//Debug.DrawRay(leftPoint.position, -leftPoint.up * 1, Color.red);
 	}
 
 	CanController similarCan;
@@ -74,26 +84,32 @@ public class CanController : MonoBehaviour
 
 				if ((similarCan !=null) && (!similarCan.ActiveCan))
 				{
-					similarCan.ActivateSelfCan();
-					GameManager.self.sceneManager.AddSimilarCansToTheList(similarCan);
+					similarCan.ActivateSelfCan();					
 				}				
 			}
 		}
 	}
-	
-	
+
+
+
+
 
 	public void ActivateSelfCan()
 	{
 		ActiveCan = true;
+		GameManager.self.sceneManager.AddSimilarCansToTheList(this);
 	}
 
 	void DeactivateSelfCan()
 	{
 		ActiveCan = false;
+		
 	}
 
-
+	public void DisableCan()
+	{
+		transform.gameObject.SetActive(false);
+	}
 	
 
 	void SetNewTag()

@@ -19,9 +19,6 @@ public class IconController : MonoBehaviour
 		animationCurve.postWrapMode = WrapMode.PingPong;
 	}
 
-	private void Start()
-	{
-	}
 
 	public void InitImg()
 	{

@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-
-
+	
 	private void OnCollisionEnter(Collision collision)
 	{
 		DisableBullet();
+
+		CanController hitCan = collision.gameObject.GetComponent<CanController>();
+
+		if (hitCan !=null) hitCan.BallHit();			
 	}
 
 
@@ -16,6 +19,5 @@ public class BulletController : MonoBehaviour
 	{
 		ShotPool.self.ReturnToPool(this);
 	}
-
     
 }

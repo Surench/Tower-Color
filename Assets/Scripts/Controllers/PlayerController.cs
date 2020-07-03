@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-	[SerializeField] Rigidbody rb;
-	[SerializeField] GameObject bullet;
+	[SerializeField] float shotSpeed;
 
 	public LayerMask layer;
 	public GameObject cursor;
@@ -28,11 +27,12 @@ public class PlayerController : MonoBehaviour
 		ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
 		Debug.DrawRay(ray.origin, ray.direction * 30, Color.red);
-		if (Physics.Raycast(ray, out hit,100 ))
+
+		if (Physics.Raycast(ray, out hit,15 ))
 		{
 			if (Input.GetMouseButtonDown(0))
 			{
-				Vector3 Vo = CalcualateVelocity(hit.point, transform.position , 1f);
+				Vector3 Vo = CalcualateVelocity(hit.point, transform.position , shotSpeed);
 
 				var newBullet = ShotPool.self.Get();
 				
