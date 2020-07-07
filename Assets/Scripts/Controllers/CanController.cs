@@ -31,32 +31,24 @@ public class CanController : MonoBehaviour
 
 	public void InitCan()
 	{
-		BlockCan();
-		DeactivateSelfCan(); // gravity off etc..
-		SetNewTag();
-		SetNewColor();
-		SetParticle();
+		ResetCan(); 		
 	}
 
 
-	public void BallHits() // Ball hits the Can
+	public void BallHits() 
 	{
 		ActivateSelfCan();
 		SearchSimilarCans();
 		AddFeverScore();
 	}
 
-	void AddFeverScore()
-	{
-		GameManager.instance.ScoreManager.AddFeverScore();
-	}
+	
 
 	public void SearchSimilarCans()
 	{
 		FindeNearSimilarCan();
 		SearchDone();
 	}
-
 
 	public void FindeNearSimilarCan()
 	{
@@ -68,6 +60,15 @@ public class CanController : MonoBehaviour
 		DoRaycast(leftPoint.position, -leftPoint.up); // Left Down
 	}
 
+	void SearchDone()
+	{
+		GameManager.instance.SceneManager.SearchingOfSimilarCansDone();
+	}
+
+	void AddFeverScore()
+	{
+		GameManager.instance.ScoreManager.AddFeverScore();
+	}
 
 	private void OnTriggerExit(Collider other)
 	{
@@ -76,14 +77,7 @@ public class CanController : MonoBehaviour
 			CanFalledDown();
 		}
 	}
-	
-
-	void SearchDone()
-	{
-		GameManager.instance.SceneManager.SearchingOfSimilarCansDone();
-	}
-	
-	
+		
 	void DoRaycast(Vector3 origin,Vector3 direction)
 	{
 		RaycastHit hit;
@@ -101,28 +95,17 @@ public class CanController : MonoBehaviour
 			}
 		}
 	}
-		
 	
-	public void BlockCan() // make them Gray and block so bullet cant hit
-	{
-		rb.useGravity = false;
-		rb.isKinematic = true;
-		isBlocked = true;		
-	}
-
-	public void UnBlockCan()
-	{
-		rb.useGravity = true;
-		rb.isKinematic = false;
-		isBlocked = false;
-		grayVisual.SetActive(false);
-	}
-
 	public void ChangeCanColorToGray() // et means the can is blocked
 	{
 		grayVisual.SetActive(true);
 	}
-
+	
+	void CanFalledDown()
+	{
+		isBlocked = true;
+		GameManager.instance.ScoreManager.AddScore(1);
+	}
 
 	public void ActivateSelfCan()
 	{
@@ -130,30 +113,40 @@ public class CanController : MonoBehaviour
 		GameManager.instance.SceneManager.AddSimilarCansToTheList(this);
 	}
 
-	void CanFalledDown()
+	void ResetCan()
 	{
-		isBlocked = true;
-		GameManager.instance.ScoreManager.AddScore(1);
-	}
+		rb.useGravity = false;
+		rb.isKinematic = true;
 
-	void DeactivateSelfCan()
-	{		
-		ActiveCan = false;
+		visualGameObject.SetActive(true);
 		particlEffect.SetActive(false);
+		grayVisual.SetActive(false);
+
+		SetNewTag();
+		SetNewColor();
+		SetParticle();
+
+		ActiveCan = false;
 	}
 
 	public void DisableCan() // when Can Been shooted or been similar can
-	{
-		DisableCanRoutine();
-	}
-
-	void DisableCanRoutine()
 	{
 		rb.isKinematic = true;
 		visualGameObject.SetActive(false); //Disable Collider
 		particlEffect.SetActive(true); // Activate Particle
 	}
+
+	public void UnBlockCan() // Init Floor
+	{
+		rb.useGravity = true;
+		rb.isKinematic = false;
+		isBlocked = false;
+		grayVisual.SetActive(false);
+	}
+
+
 	
+
 
 	void SetNewTag()
 	{
@@ -164,18 +157,17 @@ public class CanController : MonoBehaviour
 		visualGameObject.transform.gameObject.tag = selfTag;
 		transform.gameObject.tag = selfTag;
 	}
-	   
 
 	void SetNewColor()
 	{		
-		visualRender.material.color = GameManager.instance.ColorManager.GetNewBallColor(selfCanIndex);
+		visualRender.material.color = GameManager.instance.ColorManager.GetNewColor(selfCanIndex);
 	}	
 
 	void SetParticle()
 	{		
 		var col = ps.colorOverLifetime;
 
-		grad.SetKeys(new GradientColorKey[] { new GradientColorKey(GameManager.instance.ColorManager.GetNewBallColor(selfCanIndex), 0.0f) }, new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f) });
+		grad.SetKeys(new GradientColorKey[] { new GradientColorKey(GameManager.instance.ColorManager.GetNewColor(selfCanIndex), 0.0f) }, new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f) });
 		col.color = grad;
 	}
 

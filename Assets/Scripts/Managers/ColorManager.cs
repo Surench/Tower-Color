@@ -27,7 +27,7 @@ public class ColorManager : MonoBehaviour
 	}
 
 
-	public Color GetNewBallColor(int index)
+	public Color GetNewColor(int index)
 	{
 		Color newColor = Color.black;
 

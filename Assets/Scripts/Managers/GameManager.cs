@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
@@ -33,8 +34,7 @@ public class GameManager : MonoBehaviour
 	{		
 		StartGame();
 	}
-
-
+	
 	void StartGame()
 	{
 		menuPanel.SetActive(true);	
@@ -45,8 +45,8 @@ public class GameManager : MonoBehaviour
 		StartGameEvent.Invoke();
 
 		LevelManager.InitLevelManager(); //OK
-		ScoreManager.InitScoreManager(); //OK
 		ColorManager.InitColorManager(); //OK
+		ScoreManager.InitScoreManager(); //OK		
 		SceneManager.InitSceneManager(); //OK
 
 		cameraController.InitCameraController(); //OK
@@ -65,8 +65,11 @@ public class GameManager : MonoBehaviour
 
 	public void LevelLost()
 	{
-		GameOverEvent.Invoke();
 		PlayerController.GameFinished();
 		isGameOver = true;
+		GameOverEvent.Invoke();		
 	}
+
+	
+
 }

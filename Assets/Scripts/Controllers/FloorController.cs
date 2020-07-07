@@ -15,7 +15,9 @@ public class FloorController : MonoBehaviour
 
 	public void ResetFloor()
 	{
-		DeactivateFloorCollider();
+		transform.gameObject.SetActive(false);
+		floorCollider.SetActive(false);
+		transform.rotation = Quaternion.Euler(0, 0, 0);
 		ResetCansTransforms();
 	}
 
@@ -26,6 +28,7 @@ public class FloorController : MonoBehaviour
 			canControllers[i].InitCan();
 		}
 	}
+
 
 	public void ActivateCans()
 	{
@@ -46,11 +49,6 @@ public class FloorController : MonoBehaviour
 	public void ActivateFloorDetectingCollider()
 	{
 		floorCollider.SetActive(true);
-	}
-
-	public void DeactivateFloorCollider()
-	{
-		floorCollider.SetActive(false);
 	}
 
 	void ResetCansTransforms()

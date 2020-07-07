@@ -25,10 +25,15 @@ public class PlayerController : MonoBehaviour
 
 	public void InitPlayerController()
 	{
+		allowShooting = false;
+
+		ResetPlayerControler();
 		MovePlayerToStartingPos();
-		allowShooting = true;
+		
 		InitNewBulletData(); // take new Color and Tag for next Bullet
 		SetBulletIconColor(); // set next bullet color
+
+		
 	}
 
 	public void GameFinished()
@@ -36,10 +41,19 @@ public class PlayerController : MonoBehaviour
 		allowShooting = false;
 	}
 	
+	void ResetPlayerControler()
+	{
+		transform.position = Vector3.zero;
+		cameraContainer.transform.position = Vector3.zero;
+
+		transform.rotation = Quaternion.identity;
+		cameraContainer.transform.rotation = Quaternion.identity;
+	}
 
 	void MovePlayerToStartingPos()
 	{
 		StartCoroutine(MovePlayerToStartingPosR());
+		allowShooting = true;
 	}
 
 	IEnumerator MovePlayerToStartingPosR()
@@ -94,7 +108,7 @@ public class PlayerController : MonoBehaviour
 	{
 		int randomX = Random.Range(0, LevelManager.levelConfigs.colorsAmount);
 		newBulletTag = GameManager.instance.LevelManager.GetNewTag(randomX); // Will take tag
-		newBulletColor = GameManager.instance.ColorManager.GetNewBallColor(randomX); // Will take color		
+		newBulletColor = GameManager.instance.ColorManager.GetNewColor(randomX); // Will take color		
 	}
 
 	void SetBulletIconColor()

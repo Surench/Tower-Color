@@ -44,7 +44,7 @@ public class BulletController : MonoBehaviour
 	{
 		slefRenderer.enabled = false;
 		feverVisual.SetActive(true);
-		selfColiider.radius = 0.8f;
+		selfColiider.radius = 1f;
 
 		SetBulletTag("Bomb");
 	}

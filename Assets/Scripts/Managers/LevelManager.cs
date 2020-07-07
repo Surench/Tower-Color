@@ -40,7 +40,7 @@ public class LevelManager : MonoBehaviour
 		if (currentLevel < 200) //0-200 lvls
 		{
 			levelConfigs.floorsAmount = 15;
-			levelConfigs.amoAmount = 14;
+			levelConfigs.amoAmount = 12;
 			levelConfigs.colorsAmount = 3;
 			levelConfigs.isBossLvl = false;
 			levelConfigs.playerStartingHight = new Vector3(0, 11.5f, 0);

@@ -26,12 +26,15 @@ public class _SceneManager : MonoBehaviour
 		ActivateFirstStage();
 	}
 
+
 	void AddFloorsToList()  
-	{		
+	{
 		newFloorYpos = 0;
 
 		for (int i = 0; i < floorControllers.Count; i++)
 		{
+			floorControllers[i].InitFloor(); //gonna activate Cans 
+
 			float Yrotation = 0;
 
 			if (i % 2 != 0) Yrotation = 10;
@@ -40,15 +43,11 @@ public class _SceneManager : MonoBehaviour
 			else newFloorYpos += 0.5f;
 
 
-			floorControllers[i].transform.position = new Vector3(0, newFloorYpos, 0);					
-
-			floorControllers[i].InitFloor(); //gonna activate Cans 
-
+			floorControllers[i].transform.position = new Vector3(0, newFloorYpos, 0);
 			floorControllers[i].transform.rotation = Quaternion.Euler(0, Yrotation, 0);
 
 			floorControllers[i].gameObject.SetActive(true);
-
-		}
+		}		
 	}
 	
 

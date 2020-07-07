@@ -9,6 +9,10 @@ public class ScoreManager : MonoBehaviour
 	[SerializeField] Slider levelSlider;
 	[SerializeField] Slider feverSlider;
 
+	[SerializeField] Image firstCircleLevelimg;
+	[SerializeField] Image secondCircleLevelimg;
+	[SerializeField] Image levelSliderFill;
+
 	[SerializeField] Text currentPercentageText;
 	[SerializeField] Text currLvlText;
 	[SerializeField] Text nextLvlTex;
@@ -32,17 +36,14 @@ public class ScoreManager : MonoBehaviour
 	private int maxFeverScoreAmount = 5;
 	private int totalAmoAmount;
 
-	private void Start()
-	{
-		InitScoreManager();		
-	}
+	
 
 	public void InitScoreManager()
 	{
+		ResetScores();
 		RestFeverSlider();
 		ResetLevelSlider();
 		SetLvlTexts();
-
 
 		currentLevelStage = GameLvelStage.Start;
 
@@ -50,6 +51,14 @@ public class ScoreManager : MonoBehaviour
 		
 		totalCansAmount = GetTatalCansAmountForTheLvl(); //Total Cans amount in level		
 	}
+
+	void ResetScores()
+	{
+		ferevScore = 0;
+		levelSliderValue = 0;
+		totalKnockdownCans = 0;
+	}
+
 
 	void SetLvlTexts()
 	{
@@ -59,7 +68,7 @@ public class ScoreManager : MonoBehaviour
 		currentPercentageText.text = "0%";
 	}
 
-	
+		
 	public void AddScore(int amount)
 	{
 		totalKnockdownCans += amount;
@@ -122,8 +131,7 @@ public class ScoreManager : MonoBehaviour
 	{
 		currentLevelStage = GameLvelStage.HalfWay;
 		GameManager.instance.SceneManager.ActivateNextStage(1);
-		GameManager.instance.PlayerController.UpdatePlayerPosition();
-		
+		GameManager.instance.PlayerController.UpdatePlayerPosition();		
 	}
 
 	void UptadeLevelStageTolmosToWin()
@@ -131,7 +139,6 @@ public class ScoreManager : MonoBehaviour
 		currentLevelStage = GameLvelStage.AlmostToWin;		
 		GameManager.instance.SceneManager.ActivateNextStage(2);
 		GameManager.instance.PlayerController.UpdatePlayerPosition();
-
 	}
 
 	void LevelWon()
@@ -139,8 +146,7 @@ public class ScoreManager : MonoBehaviour
 		levelSlider.value = 1;
 		currentLevelStage = GameLvelStage.Won;
 		
-		GameManager.instance.LevelWon();
-		
+		GameManager.instance.LevelWon();		
 	}
 
 	void LevelLost()
