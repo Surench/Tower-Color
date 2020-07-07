@@ -26,18 +26,10 @@ public class LevelManager : MonoBehaviour
 	public static int currentLevel;
 
 	private float minimumFloorsAmount = 10;
-
-	private void Awake()
-	{
-		InitLevelManager();
-	}
-
-	
-	   
+		   
 	public void InitLevelManager()
 	{
-		//currentLevel = DataManager.GetLevelSettings().currentLevel;
-		currentLevel = 0;
+		currentLevel = DataManager.GetLevelSettings().currentLevel;
 		AllLevelCalculation();
 	}
 
@@ -48,14 +40,15 @@ public class LevelManager : MonoBehaviour
 		if (currentLevel < 200) //0-200 lvls
 		{
 			levelConfigs.floorsAmount = 15;
-			levelConfigs.amoAmount = 15;
+			levelConfigs.amoAmount = 14;
 			levelConfigs.colorsAmount = 3;
 			levelConfigs.isBossLvl = false;
 			levelConfigs.playerStartingHight = new Vector3(0, 11.5f, 0);
 		}
 
-		if (currentLevel % 3 ==0) // every 3-th lvl gonna be Boss lvl
+		if ((currentLevel % 3 ==0) && (currentLevel.Equals(0))) // every 3-th lvl gonna be Boss lvl
 		{
+			levelConfigs.colorsAmount = 4;
 			levelConfigs.isBossLvl = true;
 		}
 
@@ -76,6 +69,9 @@ public class LevelManager : MonoBehaviour
 			case 2:
 				newTag = CanTags[index];
 				break;
+			case 3:
+				newTag = CanTags[index];
+				break;
 			default:
 				Debug.LogError("Aout of Range");
 				break;
@@ -84,6 +80,14 @@ public class LevelManager : MonoBehaviour
 		return newTag;
 	}
 
+	public void LevelPassed()
+	{
+		currentLevel++;
+
+		LevelSettings levelSettings = DataManager.GetLevelSettings();
+		levelSettings.currentLevel = currentLevel;
+		DataManager.SetLevelSettings(levelSettings);		
+	}
 
 }
 

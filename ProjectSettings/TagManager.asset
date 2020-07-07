@@ -10,6 +10,7 @@ TagManager:
   - Floor
   - Groun
   - Bomb
+  - Can_3
   layers:
   - Default
   - TransparentFX

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,7 @@ public class ScoreManager : MonoBehaviour
 	[SerializeField] Text currentPercentageText;
 	[SerializeField] Text currLvlText;
 	[SerializeField] Text nextLvlTex;
+	[SerializeField] TextMeshProUGUI bulletAmountText;
 
 	enum GameLvelStage
 	{
@@ -28,27 +30,33 @@ public class ScoreManager : MonoBehaviour
 
 	private int ferevScore;
 	private int maxFeverScoreAmount = 5;
-
+	private int totalAmoAmount;
 
 	private void Start()
 	{
-		InitScoreManager();
+		InitScoreManager();		
 	}
 
 	public void InitScoreManager()
 	{
-		currentLevelStage = GameLvelStage.Start;
-		
-		totalCansAmount = GetTatalCansAmountForTheLvl();
 		RestFeverSlider();
+		ResetLevelSlider();
 		SetLvlTexts();
 
+
+		currentLevelStage = GameLvelStage.Start;
+
+		totalAmoAmount = LevelManager.levelConfigs.amoAmount; 	
+		
+		totalCansAmount = GetTatalCansAmountForTheLvl(); //Total Cans amount in level		
 	}
 
 	void SetLvlTexts()
 	{
 		currLvlText.text = (LevelManager.currentLevel + 1).ToString();
 		nextLvlTex.text = (LevelManager.currentLevel + 2).ToString();
+		bulletAmountText.text = "X " + totalAmoAmount.ToString();
+		currentPercentageText.text = "0%";
 	}
 
 	
@@ -56,7 +64,7 @@ public class ScoreManager : MonoBehaviour
 	{
 		totalKnockdownCans += amount;
 		
-		UpdateSlider();
+		UpdateLevelSlider();
 		CheckTotalScore();
 	}
 
@@ -72,6 +80,16 @@ public class ScoreManager : MonoBehaviour
 		if (ferevScore == maxFeverScoreAmount)
 			EnterFeverMode();
 	}
+
+	public void DecreaseAmoAmount()
+	{
+		--totalAmoAmount;
+
+		bulletAmountText.text = "X " + totalAmoAmount.ToString();
+		
+		if (totalAmoAmount <= 0) LevelLost();		
+	}
+
 
 	void EnterFeverMode()
 	{
@@ -125,7 +143,17 @@ public class ScoreManager : MonoBehaviour
 		
 	}
 
-	void UpdateSlider()
+	void LevelLost()
+	{
+		GameManager.instance.LevelLost();
+	}
+
+	void ResetLevelSlider()
+	{
+		levelSlider.value = 0;
+	}
+
+	void UpdateLevelSlider()
 	{
 		levelSliderValue = totalKnockdownCans / totalCansAmount;
 		levelSlider.value = levelSliderValue;
@@ -148,18 +176,15 @@ public class ScoreManager : MonoBehaviour
 
 		float endValu = 0;
 		float startValu = feverSlider.value;
-		float newFalu = 0;
-		float t;
+		float t =0;
 
-		if (startValu >0) t = 0;
-		else t = 1;
-
+		if (startValu <=0) t = 1;
+		
 		while (t<1)
 		{
 			t = (Time.time - startTime) / duration;
-			newFalu = Mathf.Lerp(startValu, endValu, t);
+			feverSlider.value = Mathf.Lerp(startValu, endValu, t);
 
-			feverSlider.value = newFalu;
 		    yield return new WaitForEndOfFrame();
 		}
 	}

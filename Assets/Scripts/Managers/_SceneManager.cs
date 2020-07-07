@@ -7,43 +7,31 @@ public class _SceneManager : MonoBehaviour
 {
 	[SerializeField] GameObject floorPrefab;
 
-	public List<CanController> canControllersForDisable;
-	public List<FloorController> floorControllers;
-
 	[SerializeField] List<FloorController> lastStage;
 	[SerializeField] List<FloorController> middStage;
 	[SerializeField] List<FloorController> firstStage;
+
+	public List<CanController> canControllersForDisable;
+	public List<FloorController> floorControllers;
 
 	public int searchCount;
 
 	private float newFloorYpos;
 	private int theLeastActiveFloor;
 
-	private void Start()
-	{
-		
-	}
-
-	public void InitScene()
+	
+	public void InitSceneManager()
 	{
 		AddFloorsToList();
-		AcrivateFirstStage();
+		ActivateFirstStage();
 	}
 
 	void AddFloorsToList()  
-	{
-		for (int i = 0; i < LevelManager.levelConfigs.floorsAmount; i++) // 
-		{
-			GameObject obj = Instantiate(floorPrefab, Vector3.zero, Quaternion.identity, transform);
-			FloorController newFloor = obj.GetComponent<FloorController>();
-			floorControllers.Add(newFloor);
-		}
-
+	{		
 		newFloorYpos = 0;
 
 		for (int i = 0; i < floorControllers.Count; i++)
 		{
-
 			float Yrotation = 0;
 
 			if (i % 2 != 0) Yrotation = 10;
@@ -52,26 +40,21 @@ public class _SceneManager : MonoBehaviour
 			else newFloorYpos += 0.5f;
 
 
-			floorControllers[i].transform.position = new Vector3(0, newFloorYpos, 0);
+			floorControllers[i].transform.position = new Vector3(0, newFloorYpos, 0);					
+
+			floorControllers[i].InitFloor(); //gonna activate Cans 
+
 			floorControllers[i].transform.rotation = Quaternion.Euler(0, Yrotation, 0);
 
-			floorControllers[i].transform.parent = transform;
-
-			floorControllers[i].InitFloor();//gonna activate Cans 
-
 			floorControllers[i].gameObject.SetActive(true);
-
-			if (i <= 3) lastStage.Add(floorControllers[i]);
-			else if (i <= 7) middStage.Add(floorControllers[i]);
-			else firstStage.Add(floorControllers[i]);
 
 		}
 	}
 	
 
-	public void AcrivateFirstStage()
+	public void ActivateFirstStage()
 	{		
-		StartCoroutine(MakeHalfGrayRoutin()); // All active floors make Gray
+		StartCoroutine(DiactivateMiddLastStage()); // All active floors make Gray
 		ActivateNextStage(0); // gonna activate 1st stage
 	}
 
@@ -90,7 +73,6 @@ public class _SceneManager : MonoBehaviour
 	
 	IEnumerator ActivateNewStage(List<FloorController> newList)
 	{
-
 		for (int i = newList.Count - 1; i >= 0; i--)
 		{			
 			newList[i].ActivateCans();
@@ -99,12 +81,12 @@ public class _SceneManager : MonoBehaviour
 
 		for (int i = newList.Count - 1; i >= 0; i--)
 		{
-			newList[i].SetFloorCollider();
+			newList[i].ActivateFloorDetectingCollider();
 		}
 	}
 		
 
-	IEnumerator MakeHalfGrayRoutin()
+	IEnumerator DiactivateMiddLastStage()
 	{
 		for (int i = 0; i < lastStage.Count; i++)
 		{
@@ -134,7 +116,7 @@ public class _SceneManager : MonoBehaviour
 		//them activating Floor Collider to detec falling Cans and count them
 		for (int i = theLeastActiveFloor; i < LevelManager.levelConfigs.floorsAmount; i++)
 		{
-			floorControllers[i].SetFloorCollider();
+			floorControllers[i].ActivateFloorDetectingCollider();
 		}
 	}
 

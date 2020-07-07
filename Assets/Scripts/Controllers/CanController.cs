@@ -20,15 +20,13 @@ public class CanController : MonoBehaviour
 	public bool ActiveCan;// it's for to finde similar Can if founded so it's Active
 	public bool isBlocked; // if true it means cant hit block
 
+	private CanController similarCan;
+
 	private int selfCanIndex;
 	private string selfTag;
+
 	private readonly string floorTag = "Floor";
 	private readonly string unTagged = "Untagged";
-	
-	private void Update()
-	{
-		//DebugDrawRay();
-	}
 
 
 	public void InitCan()
@@ -78,24 +76,14 @@ public class CanController : MonoBehaviour
 			CanFalledDown();
 		}
 	}
-
+	
 
 	void SearchDone()
 	{
 		GameManager.instance.SceneManager.SearchingOfSimilarCansDone();
 	}
-
-	void DebugDrawRay()
-	{
-		Debug.DrawRay(visualGameObject.transform.position, visualGameObject.transform.TransformDirection(Vector3.right) * 5, Color.green);
-		Debug.DrawRay(visualGameObject.transform.position, visualGameObject.transform.TransformDirection(-Vector3.right) * 5, Color.green);
-		//Debug.DrawRay(rightPoint.position, rightPoint.up * 1, Color.red);
-		//Debug.DrawRay(rightPoint.position, -rightPoint.up * 1, Color.red);
-		//Debug.DrawRay(leftPoint.position, leftPoint.up * 1, Color.red);
-		//Debug.DrawRay(leftPoint.position, -leftPoint.up * 1, Color.red);
-	}
-
-	CanController similarCan;
+	
+	
 	void DoRaycast(Vector3 origin,Vector3 direction)
 	{
 		RaycastHit hit;
@@ -193,8 +181,19 @@ public class CanController : MonoBehaviour
 
 	private int GetRandomNewIndex()
 	{
-		int randomX = Random.Range(0, 3);
+		int randomX = Random.Range(0, LevelManager.levelConfigs.colorsAmount);
 
 		return randomX;
+	}
+
+
+	void DebugDrawRay()
+	{
+		Debug.DrawRay(visualGameObject.transform.position, visualGameObject.transform.TransformDirection(Vector3.right) * 5, Color.green);
+		Debug.DrawRay(visualGameObject.transform.position, visualGameObject.transform.TransformDirection(-Vector3.right) * 5, Color.green);
+		Debug.DrawRay(rightPoint.position, rightPoint.up * 1, Color.red);
+		Debug.DrawRay(rightPoint.position, -rightPoint.up * 1, Color.red);
+		Debug.DrawRay(leftPoint.position, leftPoint.up * 1, Color.red);
+		Debug.DrawRay(leftPoint.position, -leftPoint.up * 1, Color.red);
 	}
 }

@@ -9,7 +9,22 @@ public class FloorController : MonoBehaviour
 
 	public void InitFloor()
 	{
-		InitCans();
+		ResetFloor(); 
+		InitCans();		
+	}
+
+	public void ResetFloor()
+	{
+		DeactivateFloorCollider();
+		ResetCansTransforms();
+	}
+
+	void InitCans()
+	{
+		for (int i = 0; i < canControllers.Count; i++)
+		{
+			canControllers[i].InitCan();
+		}
 	}
 
 	public void ActivateCans()
@@ -26,26 +41,27 @@ public class FloorController : MonoBehaviour
 		{
 			canControllers[i].ChangeCanColorToGray();
 		}
-	}
+	}	
 
-	void InitCans()
-	{
-		floorCollider.SetActive(false);
-
-		for (int i = 0; i < canControllers.Count; i++)  
-		{
-			canControllers[i].InitCan();
-		}
-	}
-
-	public void SetFloorCollider()
+	public void ActivateFloorDetectingCollider()
 	{
 		floorCollider.SetActive(true);
 	}
 
-	public void ResetFloor()
+	public void DeactivateFloorCollider()
 	{
 		floorCollider.SetActive(false);
+	}
+
+	void ResetCansTransforms()
+	{
+		int angelY = 24;
+
+		for (int i = 0; i < canControllers.Count; i++)
+		{
+			canControllers[i].gameObject.transform.localPosition = Vector3.zero;
+			canControllers[i].gameObject.transform.rotation = Quaternion.Euler(0, angelY * i, 0);
+		}
 	}
 
 }

@@ -110,7 +110,6 @@ public class BulletController : MonoBehaviour
 	}
 
 
-
 	public void SetBulletTag(string newTag)
 	{
 		selfTag = newTag;

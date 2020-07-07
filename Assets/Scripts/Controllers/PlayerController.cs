@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
 	private bool allowShooting;
 	
 
-	public void InitPlayer()
+	public void InitPlayerController()
 	{
 		MovePlayerToStartingPos();
 		allowShooting = true;
@@ -31,6 +31,10 @@ public class PlayerController : MonoBehaviour
 		SetBulletIconColor(); // set next bullet color
 	}
 
+	public void GameFinished()
+	{
+		allowShooting = false;
+	}
 	
 
 	void MovePlayerToStartingPos()
@@ -86,6 +90,18 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	void InitNewBulletData()
+	{
+		int randomX = Random.Range(0, LevelManager.levelConfigs.colorsAmount);
+		newBulletTag = GameManager.instance.LevelManager.GetNewTag(randomX); // Will take tag
+		newBulletColor = GameManager.instance.ColorManager.GetNewBallColor(randomX); // Will take color		
+	}
+
+	void SetBulletIconColor()
+	{
+		iconController.SetNewIconColor(newBulletColor);
+	}
+
 
 	void ShootBullet()
 	{
@@ -119,8 +135,6 @@ public class PlayerController : MonoBehaviour
 
 		bullet.gameObject.SetActive(true);
 
-		
-
 		newBulletObj.InitBullet(newBulletTag, newBulletColor, velocity);
 
 		iconController.EvaluateIcon();
@@ -139,21 +153,12 @@ public class PlayerController : MonoBehaviour
 		InitNewBulletData(); // take new Color and Tag for next Bullet
 		SetBulletIconColor(); // set next bullet color
 
+		GameManager.instance.ScoreManager.DecreaseAmoAmount();
+
 		yield return new WaitForSeconds(0.7f);
 		allowShooting = true;
 	}
-
-	void InitNewBulletData()
-	{
-		int randomX = Random.Range(0, LevelManager.levelConfigs.colorsAmount );
-		newBulletTag = GameManager.instance.LevelManager.GetNewTag(randomX); // Will take tag
-		newBulletColor = GameManager.instance.ColorManager.GetNewBallColor(randomX); // Will take color		
-	}
-
-	void SetBulletIconColor()
-	{
-		iconController.SetNewIconColor(newBulletColor);
-	}
+	   
 
 	Vector3 CalcualateVelocity (Vector3 target, Vector3 origin , float time)
 	{
@@ -190,7 +195,6 @@ public class PlayerController : MonoBehaviour
 
 	void RotatePlayer(Vector3 newElure)
 	{
-
 		transform.Rotate(newElure);
 		cameraContainer.transform.Rotate(newElure);
 	}

@@ -4,27 +4,24 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-	[SerializeField] Transform playerPos;
 	[SerializeField] Camera mainCamera;
 
 	private Coroutine UpdateCameraWinigPosC;
 	private Coroutine WinigRotationC;
+	   
 
-
-	public void InitCamera()
+	public void InitCameraController()
 	{
 		mainCamera.fieldOfView = 73f;
-		if (WinigRotationC !=null) StopCoroutine(WinigRotationC);
-		
+		if (WinigRotationC !=null) StopCoroutine(WinigRotationC);		
 	}
 
 	public void SetCameraWiningPos()
 	{
 		UpdateCameraWinigPosC = StartCoroutine(UpdateCameraWinigPos());
-		WinigRotationC = StartCoroutine(UpdateCameraPos());
+		WinigRotationC = StartCoroutine(UpdateCameraRotation());
 	}
 	
-
 	IEnumerator UpdateCameraWinigPos()
 	{
 		float startTime = Time.time;
@@ -44,7 +41,7 @@ public class CameraController : MonoBehaviour
 		}
 	}
 
-	IEnumerator UpdateCameraPos()
+	IEnumerator UpdateCameraRotation()
 	{
 		Vector3 rotPos = new Vector3(0, 0.2f, 0);
 		while (true)
@@ -52,20 +49,6 @@ public class CameraController : MonoBehaviour
 			transform.Rotate(rotPos);
 			yield return new WaitForEndOfFrame();
 		}
-
 	}
 
-
-
-	IEnumerator WinigRotationR()
-	{
-		SetCameraPosAndRot();
-		yield return new WaitForEndOfFrame();
-	}
-
-	void SetCameraPosAndRot()
-	{
-		transform.position = playerPos.position;
-		transform.rotation = Quaternion.Euler (0, playerPos.transform.eulerAngles.y, 0);
-	}
 }
