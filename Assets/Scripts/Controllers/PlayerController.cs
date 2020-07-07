@@ -1,55 +1,158 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+
+
 
 public class PlayerController : MonoBehaviour
 {
+	[SerializeField] GameObject cameraContainer;
+	[SerializeField] Transform shotingPos;
 	[SerializeField] float shotSpeed;
 
-	public LayerMask layer;
-	public GameObject cursor;
+	public IconController iconController;
+	public static bool enteredFever;
 
-	private Queue<GameObject> availableObjects = new Queue<GameObject>();
 	private Ray ray;
 	private RaycastHit hit;
+	
+	private Color newBulletColor;
+	private string newBulletTag;
 
+	private bool allowShooting;
+	
+
+	public void InitPlayer()
+	{
+		MovePlayerToStartingPos();
+		allowShooting = true;
+		InitNewBulletData(); // take new Color and Tag for next Bullet
+		SetBulletIconColor(); // set next bullet color
+	}
 
 	
-	private void Update()
+
+	void MovePlayerToStartingPos()
 	{
-		InitProjectile();
+		StartCoroutine(MovePlayerToStartingPosR());
 	}
-		
+
+	IEnumerator MovePlayerToStartingPosR()
+	{
+		float startTime = Time.time;
+		float duration = 2f;
+		float t = 0;
+
+		Vector3 startPos = transform.position;
+		Vector3 endPos = LevelManager.levelConfigs.playerStartingHight;
+
+		while (t<1)
+		{
+			t = (Time.time - startTime) / duration;
+
+			transform.position = Vector3.Lerp(startPos, endPos, t);
+			cameraContainer.transform.position = Vector3.Lerp(startPos, endPos, t);
+
+			transform.Rotate(new Vector3(0, -t * 2f, 0));
+			cameraContainer.transform.Rotate(new Vector3(0, -t * 2f, 0));			
+
+			yield return new WaitForEndOfFrame();
+		}
+	}
+
+	public void UpdatePlayerPosition()
+	{
+		StartCoroutine(UpdatePlayerNewPositionR());
+	}
+
+	IEnumerator UpdatePlayerNewPositionR()
+	{
+		float startTime = Time.time;
+		float duration = 0.5f;
+		float t = 0;
+
+		Vector3 startPos = transform.position;
+		Vector3 endPos = transform.position - new Vector3(0, 4.6f,0);
+
+		while (t < 1)
+		{
+			t = (Time.time - startTime) / duration;
+
+			transform.position = Vector3.Lerp(startPos, endPos, t);
+			cameraContainer.transform.position = Vector3.Lerp(startPos, endPos, t);			
+
+			yield return new WaitForEndOfFrame();
+		}
+	}
 
 
-	void InitProjectile()
+	void ShootBullet()
 	{
 		ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
 		Debug.DrawRay(ray.origin, ray.direction * 30, Color.red);
 
-		if (Physics.Raycast(ray, out hit,15 ))
+		if (Physics.Raycast(ray, out hit,15 ) && allowShooting)
 		{
-			if (Input.GetMouseButtonDown(0))
-			{
-				Vector3 Vo = CalcualateVelocity(hit.point, transform.position , shotSpeed);
+			var newBullet = ShotPool.self.Get();			
 
-				var newBullet = ShotPool.self.Get();
-				
-				ShootBullet(newBullet.gameObject, Vo);				
-			}
+			Vector3 Vo = CalcualateVelocity(hit.point, shotingPos.position, shotSpeed);
+			
+			InitBullet(newBullet.gameObject, Vo);
 
+			PlayerShooted();
 		}
 	}
 
 
-	void ShootBullet(GameObject bullet, Vector3 velocity)
+	void InitBullet(GameObject bullet, Vector3 velocity)
 	{
-		Rigidbody rb = bullet.GetComponent<Rigidbody>();
-		bullet.transform.position = transform.position;
-		bullet.transform.rotation = Quaternion.identity;
+		BulletController newBulletObj = bullet.gameObject.GetComponent<BulletController>();
+
+		if (enteredFever)
+			newBulletObj.isFeverBall = true;
+		
+
+		bullet.transform.position = shotingPos.position;
+		bullet.transform.rotation = shotingPos.rotation;
+
 		bullet.gameObject.SetActive(true);
-		rb.velocity = velocity;
+
+		
+
+		newBulletObj.InitBullet(newBulletTag, newBulletColor, velocity);
+
+		iconController.EvaluateIcon();
+	}
+
+
+	void PlayerShooted()
+	{
+		StartCoroutine(PlayerShootedRoutin());
+	}
+
+	IEnumerator PlayerShootedRoutin()
+	{
+		allowShooting = false;
+
+		InitNewBulletData(); // take new Color and Tag for next Bullet
+		SetBulletIconColor(); // set next bullet color
+
+		yield return new WaitForSeconds(0.7f);
+		allowShooting = true;
+	}
+
+	void InitNewBulletData()
+	{
+		int randomX = Random.Range(0, LevelManager.levelConfigs.colorsAmount );
+		newBulletTag = GameManager.instance.LevelManager.GetNewTag(randomX); // Will take tag
+		newBulletColor = GameManager.instance.ColorManager.GetNewBallColor(randomX); // Will take color		
+	}
+
+	void SetBulletIconColor()
+	{
+		iconController.SetNewIconColor(newBulletColor);
 	}
 
 	Vector3 CalcualateVelocity (Vector3 target, Vector3 origin , float time)
@@ -72,4 +175,68 @@ public class PlayerController : MonoBehaviour
 
 		return result;
 	}
+
+	public void EnterFerev()
+	{
+		enteredFever = true;
+		iconController.EnteredFever();
+	}
+
+	public void ExiteFever()
+	{
+		enteredFever = false;
+		iconController.FeverExite();
+	}
+
+	void RotatePlayer(Vector3 newElure)
+	{
+
+		transform.Rotate(newElure);
+		cameraContainer.transform.Rotate(newElure);
+	}
+
+
+
+	PointerEventData pointerData;
+
+	
+	Vector2 StartPosition;
+	Vector2 CurrentPosition;
+	Vector2 TotalDeltaPosition;
+	Vector2 LastPosition;
+	Vector2 DeltaPosition;
+
+
+	public void TouchDrag(BaseEventData data)
+	{
+		pointerData = data as PointerEventData;
+
+		CurrentPosition = pointerData.position;
+
+		TotalDeltaPosition = CurrentPosition - StartPosition;
+
+		DeltaPosition = CurrentPosition - LastPosition;
+
+		LastPosition = pointerData.position;
+		
+
+		RotatePlayer(new Vector3(0, DeltaPosition.x, 0));
+	}
+
+	public void TouchDown(BaseEventData data)
+	{
+		pointerData = data as PointerEventData;
+
+		StartPosition = pointerData.position;
+		LastPosition = StartPosition;
+		TotalDeltaPosition = Vector3.zero;
+	}
+
+
+	public void TouchUp()
+	{
+		if (TotalDeltaPosition.magnitude < 10) // Limir for shooting , if you rotated so you cant shoot
+			ShootBullet();						
+	}
+
 }

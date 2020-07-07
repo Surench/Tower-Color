@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class IconController : MonoBehaviour
 {
 
 	[HeaderAttribute("Animation Curve")]
 	public AnimationCurve animationCurve;
+
+	[SerializeField] Image selfImg;
+	[SerializeField] GameObject feverImg;
 
 	private Vector3 initialScale;
 	private Vector3 finalScale;
@@ -15,12 +19,17 @@ public class IconController : MonoBehaviour
 	private void Awake()
 	{
 		initialScale = transform.localScale;
-		finalScale = Vector3.one;
-		animationCurve.postWrapMode = WrapMode.PingPong;
+		finalScale = new Vector3(0.8f, 0.8f, 0.8f);
 	}
 
 
-	public void InitImg()
+	public void SetNewIconColor(Color newColor)
+	{
+		newColor.a = 1;
+		selfImg.color = newColor;		
+	}
+	
+	public void EvaluateIcon()
 	{
 		StartCoroutine(UpdateImg());
 	}
@@ -28,7 +37,7 @@ public class IconController : MonoBehaviour
 	IEnumerator UpdateImg()
 	{
 		float startTime = Time.time;
-		float duration = 1.5f;
+		float duration = 0.5f;
 		float t = 0;
 
 		while (t<1)
@@ -36,15 +45,25 @@ public class IconController : MonoBehaviour
 			t = (Time.time - startTime) / duration;
 
 			graphValue = animationCurve.Evaluate(t);
-			transform.localScale = finalScale * graphValue;
+			transform.localScale = finalScale * graphValue;			
 
 			yield return new WaitForEndOfFrame();
 		}
 	}
 
-	private void Update()
+	public void EnteredFever()
 	{
-		//graphValue = animationCurve.Evaluate(Time.time);
-		//transform.localScale = finalScale * graphValue;
+		ActivateDeactivateFeverImg(true); // 
 	}
+
+	public void FeverExite()
+	{
+		ActivateDeactivateFeverImg(false); // 
+	}
+
+	void ActivateDeactivateFeverImg(bool isActive)
+	{
+		feverImg.SetActive(isActive);
+	}
+
 }

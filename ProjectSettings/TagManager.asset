@@ -7,6 +7,9 @@ TagManager:
   - Can_0
   - Can_1
   - Can_2
+  - Floor
+  - Groun
+  - Bomb
   layers:
   - Default
   - TransparentFX

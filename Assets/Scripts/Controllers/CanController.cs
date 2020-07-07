@@ -4,39 +4,53 @@ using UnityEngine;
 
 public class CanController : MonoBehaviour
 {
+	[SerializeField] Rigidbody rb;
 	[SerializeField] Renderer visualRender;
+
 	[SerializeField] GameObject visualGameObject;
+	[SerializeField] GameObject grayVisual;
+	[SerializeField] GameObject particlEffect;
+
 	[SerializeField] Transform rightPoint;
 	[SerializeField] Transform leftPoint;
 
-	public bool ActiveCan;
+	[SerializeField] ParticleSystem ps;
+	[SerializeField] Gradient grad;
+
+	public bool ActiveCan;// it's for to finde similar Can if founded so it's Active
+	public bool isBlocked; // if true it means cant hit block
 
 	private int selfCanIndex;
 	private string selfTag;
+	private readonly string floorTag = "Floor";
+	private readonly string unTagged = "Untagged";
 	
-		
-	private void Start()
-	{
-		InitCan();
-	}
-
 	private void Update()
 	{
 		//DebugDrawRay();
 	}
 
-	void InitCan()
+
+	public void InitCan()
 	{
-		DeactivateSelfCan();
+		BlockCan();
+		DeactivateSelfCan(); // gravity off etc..
 		SetNewTag();
-		SetNewColor();		
+		SetNewColor();
+		SetParticle();
 	}
 
 
-	public void BallHit()
+	public void BallHits() // Ball hits the Can
 	{
 		ActivateSelfCan();
 		SearchSimilarCans();
+		AddFeverScore();
+	}
+
+	void AddFeverScore()
+	{
+		GameManager.instance.ScoreManager.AddFeverScore();
 	}
 
 	public void SearchSimilarCans()
@@ -56,9 +70,19 @@ public class CanController : MonoBehaviour
 		DoRaycast(leftPoint.position, -leftPoint.up); // Left Down
 	}
 
+
+	private void OnTriggerExit(Collider other)
+	{
+		if (other.tag.Equals(floorTag) && !isBlocked)
+		{
+			CanFalledDown();
+		}
+	}
+
+
 	void SearchDone()
 	{
-		GameManager.self.sceneManager.SearchingOfSimilarCansDone();
+		GameManager.instance.SceneManager.SearchingOfSimilarCansDone();
 	}
 
 	void DebugDrawRay()
@@ -89,26 +113,57 @@ public class CanController : MonoBehaviour
 			}
 		}
 	}
+		
+	
+	public void BlockCan() // make them Gray and block so bullet cant hit
+	{
+		rb.useGravity = false;
+		rb.isKinematic = true;
+		isBlocked = true;		
+	}
 
+	public void UnBlockCan()
+	{
+		rb.useGravity = true;
+		rb.isKinematic = false;
+		isBlocked = false;
+		grayVisual.SetActive(false);
+	}
 
-
+	public void ChangeCanColorToGray() // et means the can is blocked
+	{
+		grayVisual.SetActive(true);
+	}
 
 
 	public void ActivateSelfCan()
 	{
 		ActiveCan = true;
-		GameManager.self.sceneManager.AddSimilarCansToTheList(this);
+		GameManager.instance.SceneManager.AddSimilarCansToTheList(this);
+	}
+
+	void CanFalledDown()
+	{
+		isBlocked = true;
+		GameManager.instance.ScoreManager.AddScore(1);
 	}
 
 	void DeactivateSelfCan()
-	{
+	{		
 		ActiveCan = false;
-		
+		particlEffect.SetActive(false);
 	}
 
-	public void DisableCan()
+	public void DisableCan() // when Can Been shooted or been similar can
 	{
-		transform.gameObject.SetActive(false);
+		DisableCanRoutine();
+	}
+
+	void DisableCanRoutine()
+	{
+		rb.isKinematic = true;
+		visualGameObject.SetActive(false); //Disable Collider
+		particlEffect.SetActive(true); // Activate Particle
 	}
 	
 
@@ -116,43 +171,24 @@ public class CanController : MonoBehaviour
 	{
 		selfCanIndex = GetRandomNewIndex();
 
-		selfTag = GetNewTagForThisCan(selfCanIndex);
+		selfTag = GameManager.instance.LevelManager.GetNewTag(selfCanIndex);
 
 		visualGameObject.transform.gameObject.tag = selfTag;
+		transform.gameObject.tag = selfTag;
 	}
+	   
 
 	void SetNewColor()
-	{
-		visualRender.material.color = GetRandomColor();
-	}
+	{		
+		visualRender.material.color = GameManager.instance.ColorManager.GetNewBallColor(selfCanIndex);
+	}	
 
+	void SetParticle()
+	{		
+		var col = ps.colorOverLifetime;
 
-
-	private string GetNewTagForThisCan(int newIndex)
-	{
-		string newString = "";
-
-		switch (newIndex)
-		{
-			case 0:
-				newString = GameManager.self.sceneManager.CanTags[newIndex];
-				break;
-			case 1:
-				newString = GameManager.self.sceneManager.CanTags[newIndex];
-				break;
-			case 2:
-				newString = GameManager.self.sceneManager.CanTags[newIndex];
-				break;
-		}
-
-		return newString;
-	}
-
-	private Color GetRandomColor()
-	{
-		Color newColor = GameManager.self.colorManager.Colors[selfCanIndex];
-
-		return newColor;
+		grad.SetKeys(new GradientColorKey[] { new GradientColorKey(GameManager.instance.ColorManager.GetNewBallColor(selfCanIndex), 0.0f) }, new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f) });
+		col.color = grad;
 	}
 
 	private int GetRandomNewIndex()
