@@ -40,13 +40,13 @@ public class LevelManager : MonoBehaviour
 		if (currentLevel < 200) //0-200 lvls
 		{
 			levelConfigs.floorsAmount = 15;
-			levelConfigs.amoAmount = 12;
+			levelConfigs.amoAmount = 15;
 			levelConfigs.colorsAmount = 3;
 			levelConfigs.isBossLvl = false;
 			levelConfigs.playerStartingHight = new Vector3(0, 11.5f, 0);
 		}
 
-		if ((currentLevel % 3 ==0) && (currentLevel.Equals(0))) // every 3-th lvl gonna be Boss lvl
+		if ((currentLevel % 3 ==0) && (!currentLevel.Equals(0))) // every 3-th lvl gonna be Boss lvl
 		{
 			levelConfigs.colorsAmount = 4;
 			levelConfigs.isBossLvl = true;

@@ -6,6 +6,9 @@ public class CameraController : MonoBehaviour
 {
 	[SerializeField] Camera mainCamera;
 
+	[SerializeField] Color bossCameraBG;
+	[SerializeField] Color basicCameraBG;
+
 	private Coroutine UpdateCameraWinigPosC;
 	private Coroutine WinigRotationC;
 	   
@@ -49,6 +52,16 @@ public class CameraController : MonoBehaviour
 			transform.Rotate(rotPos);
 			yield return new WaitForEndOfFrame();
 		}
+	}
+
+	public void SetBossLevel()
+	{
+		mainCamera.backgroundColor = bossCameraBG;
+	}
+
+	public void SetBasicLevel()
+	{
+		mainCamera.backgroundColor = basicCameraBG;
 	}
 
 }

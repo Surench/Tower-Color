@@ -8,15 +8,20 @@ public class ListOfColors
 	public List<Color> ColorPacks;	
 }
 public class ColorManager : MonoBehaviour
-{
-
+{	
 	[SerializeField] ListOfColors[] listOfColors;
-	
+
+
+	[SerializeField] GameObject LowPolyWaterBasic;
+	[SerializeField] GameObject LowPolyWaterBossLvl;
+
+
 	public List<Color> currentColorPack;
 
 	public void InitColorManager()
 	{
 		currentColorPack.Clear();
+		CheckIsBossLvel();
 
 		int random = Random.Range(0, listOfColors.Length);
 
@@ -26,6 +31,21 @@ public class ColorManager : MonoBehaviour
 		}
 	}
 
+	void CheckIsBossLvel()
+	{
+		if (LevelManager.levelConfigs.isBossLvl)
+		{			
+			LowPolyWaterBasic.SetActive(false);
+			LowPolyWaterBossLvl.SetActive(true);
+			GameManager.instance.cameraController.SetBossLevel();
+		}
+		else
+		{
+			LowPolyWaterBasic.SetActive(true);
+			LowPolyWaterBossLvl.SetActive(false);
+			GameManager.instance.cameraController.SetBasicLevel();
+		}
+	}
 
 	public Color GetNewColor(int index)
 	{

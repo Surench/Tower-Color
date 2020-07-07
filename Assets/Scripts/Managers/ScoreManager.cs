@@ -18,7 +18,7 @@ public class ScoreManager : MonoBehaviour
 	[SerializeField] Text nextLvlTex;
 	[SerializeField] TextMeshProUGUI bulletAmountText;
 
-	enum GameLvelStage
+	public enum GameLvelStage
 	{
 		Start,
 		HalfWay,
@@ -26,7 +26,7 @@ public class ScoreManager : MonoBehaviour
 		Won
 	}
 
-	private GameLvelStage currentLevelStage;
+	public GameLvelStage currentLevelStage;
 
 	private float totalCansAmount; // in specific lvl
 	private float totalKnockdownCans; // how much Cans you distroyed
@@ -131,7 +131,8 @@ public class ScoreManager : MonoBehaviour
 	{
 		currentLevelStage = GameLvelStage.HalfWay;
 		GameManager.instance.SceneManager.ActivateNextStage(1);
-		GameManager.instance.PlayerController.UpdatePlayerPosition();		
+		GameManager.instance.PlayerController.UpdatePlayerPosition();
+		GameManager.instance.akuController.UpdateAkuAkuPosToDown();
 	}
 
 	void UptadeLevelStageTolmosToWin()
@@ -139,6 +140,7 @@ public class ScoreManager : MonoBehaviour
 		currentLevelStage = GameLvelStage.AlmostToWin;		
 		GameManager.instance.SceneManager.ActivateNextStage(2);
 		GameManager.instance.PlayerController.UpdatePlayerPosition();
+		GameManager.instance.akuController.UpdateAkuAkuPosToDown();
 	}
 
 	void LevelWon()

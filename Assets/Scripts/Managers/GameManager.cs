@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 	public ScoreManager ScoreManager;
 	public PlayerController PlayerController;
 	public CameraController cameraController;
+	public AkuAkuController akuController;
 
 	[SerializeField] UnityEvent StartGameEvent;
 	[SerializeField] UnityEvent GameOverEvent;
@@ -48,6 +49,7 @@ public class GameManager : MonoBehaviour
 		ColorManager.InitColorManager(); //OK
 		ScoreManager.InitScoreManager(); //OK		
 		SceneManager.InitSceneManager(); //OK
+		akuController.InitAkuAku(); //OK
 
 		cameraController.InitCameraController(); //OK
 		PlayerController.InitPlayerController(); //OK
