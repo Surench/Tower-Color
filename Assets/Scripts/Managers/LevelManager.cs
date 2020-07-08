@@ -48,6 +48,7 @@ public class LevelManager : MonoBehaviour
 
 		if ((currentLevel % 3 ==0) && (!currentLevel.Equals(0))) // every 3-th lvl gonna be Boss lvl
 		{
+			levelConfigs.amoAmount = 18;
 			levelConfigs.colorsAmount = 4;
 			levelConfigs.isBossLvl = true;
 		}

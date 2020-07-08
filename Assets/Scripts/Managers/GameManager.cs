@@ -63,6 +63,7 @@ public class GameManager : MonoBehaviour
 		LevelManager.LevelPassed();
 		cameraController.SetCameraWiningPos();
 		PlayerController.GameFinished();
+		akuController.LevelPasse();
 	}
 
 	public void LevelLost()

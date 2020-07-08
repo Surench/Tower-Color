@@ -40,16 +40,16 @@ public class ScoreManager : MonoBehaviour
 
 	public void InitScoreManager()
 	{
+		currentLevelStage = GameLvelStage.Start;
+
+		totalAmoAmount = LevelManager.levelConfigs.amoAmount;
+
+		totalCansAmount = GetTatalCansAmountForTheLvl(); //Total Cans amount in level
+
 		ResetScores();
 		RestFeverSlider();
 		ResetLevelSlider();
-		SetLvlTexts();
-
-		currentLevelStage = GameLvelStage.Start;
-
-		totalAmoAmount = LevelManager.levelConfigs.amoAmount; 	
-		
-		totalCansAmount = GetTatalCansAmountForTheLvl(); //Total Cans amount in level		
+		SetLvlTexts();				
 	}
 
 	void ResetScores()
@@ -109,11 +109,11 @@ public class ScoreManager : MonoBehaviour
 
 	void CheckTotalScore()
 	{
-		if ((levelSliderValue >=0.40f && levelSliderValue <= 0.6f) && (currentLevelStage != GameLvelStage.HalfWay)) // Half Way
+		if ((levelSliderValue >=0.35f && levelSliderValue <= 0.6f) && (currentLevelStage != GameLvelStage.HalfWay)) // Half Way
 		{
 			UptadeLevelStageToHalfWay();
 		}
-		else if((levelSliderValue >=0.65f && levelSliderValue <= 0.8f) && (currentLevelStage != GameLvelStage.AlmostToWin)) // Almost To win
+		else if((levelSliderValue >=0.60f && levelSliderValue <= 0.8f) && (currentLevelStage != GameLvelStage.AlmostToWin)) // Almost To win
 		{
 			UptadeLevelStageTolmosToWin();			
 		}

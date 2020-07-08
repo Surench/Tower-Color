@@ -7,12 +7,13 @@ public class AkuAkuController : MonoBehaviour
 	[SerializeField] GameObject Glow;
 	[SerializeField] GameObject Pokimon;
 	[SerializeField] GameObject AkuAku;
-
+	[SerializeField] GameObject[] conffeties;
 	private bool isBossLvl;
 
 
 	public void InitAkuAku()
 	{
+		ActivateDiactivateConffeties(false);
 		CheckIsBossLevel();
 	}
 
@@ -72,5 +73,17 @@ public class AkuAkuController : MonoBehaviour
 		}
 	}
 
+	public void LevelPasse()
+	{
+		ActivateDiactivateConffeties(true);
+	}
+
+	void ActivateDiactivateConffeties(bool isActive)
+	{
+		for (int i = 0; i < conffeties.Length; i++)
+		{
+			conffeties[i].SetActive(isActive);
+		}
+	}
 
 }
