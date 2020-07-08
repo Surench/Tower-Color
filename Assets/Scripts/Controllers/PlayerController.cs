@@ -21,11 +21,12 @@ public class PlayerController : MonoBehaviour
 	private string newBulletTag;
 
 	private bool allowShooting;
+	private bool allowRotate;
 	
 
 	public void InitPlayerController()
 	{
-		allowShooting = false;
+		SetOffBools();
 
 		ResetPlayerControler();
 		MovePlayerToStartingPos();
@@ -38,7 +39,13 @@ public class PlayerController : MonoBehaviour
 
 	public void GameFinished()
 	{
+		SetOffBools();
+	}
+
+	void SetOffBools()
+	{
 		allowShooting = false;
+		allowRotate = false;
 	}
 	
 	void ResetPlayerControler()
@@ -54,6 +61,7 @@ public class PlayerController : MonoBehaviour
 	{
 		StartCoroutine(MovePlayerToStartingPosR());
 		allowShooting = true;
+		allowRotate = true;
 	}
 
 	IEnumerator MovePlayerToStartingPosR()
@@ -236,9 +244,11 @@ public class PlayerController : MonoBehaviour
 		DeltaPosition = CurrentPosition - LastPosition;
 
 		LastPosition = pointerData.position;
-		
 
-		RotatePlayer(new Vector3(0, DeltaPosition.x, 0));
+
+		if (allowRotate)
+			RotatePlayer(new Vector3(0, DeltaPosition.x, 0));
+
 	}
 
 	public void TouchDown(BaseEventData data)
