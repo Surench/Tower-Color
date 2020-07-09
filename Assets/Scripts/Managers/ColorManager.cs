@@ -11,7 +11,6 @@ public class ColorManager : MonoBehaviour
 {	
 	[SerializeField] ListOfColors[] listOfColors;
 
-
 	[SerializeField] GameObject LowPolyWaterBasic;
 	[SerializeField] GameObject LowPolyWaterBossLvl;
 
@@ -20,8 +19,13 @@ public class ColorManager : MonoBehaviour
 
 	public void InitColorManager()
 	{
-		currentColorPack.Clear();
+		PickaRandomColorForScen();
 		CheckIsBossLvel();
+	}
+
+	void PickaRandomColorForScen()
+	{
+		currentColorPack.Clear();
 
 		int random = Random.Range(0, listOfColors.Length);
 
