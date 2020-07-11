@@ -33,8 +33,6 @@ public class PlayerController : MonoBehaviour
 		
 		InitNewBulletData(); // take new Color and Tag for next Bullet
 		SetBulletIconColor(); // set next bullet color
-
-		
 	}
 
 	public void GameFinished()
@@ -206,13 +204,12 @@ public class PlayerController : MonoBehaviour
 	public void EnterFerev()
 	{
 		enteredFever = true;
-		iconController.EnteredFever();
+		//iconController.EnteredFever();
 	}
 
 	public void ExiteFever()
 	{
 		enteredFever = false;
-		iconController.FeverExite();
 	}
 
 	void RotatePlayer(Vector3 newElure)
@@ -247,7 +244,8 @@ public class PlayerController : MonoBehaviour
 
 
 		if (allowRotate)
-			RotatePlayer(new Vector3(0, DeltaPosition.x, 0));
+			RotatePlayer(new Vector3(0, DeltaPosition.x/4
+				, 0));
 
 	}
 

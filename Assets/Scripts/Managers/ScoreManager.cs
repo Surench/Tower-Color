@@ -18,6 +18,12 @@ public class ScoreManager : MonoBehaviour
 	[SerializeField] Text nextLvlTex;
 	[SerializeField] TextMeshProUGUI bulletAmountText;
 
+	public GameEvent UpdateToMiddStage;
+	public GameEvent UpdateToFinalStage;
+	public GameEvent EnterFever;
+	public GameEvent ExitFever;
+
+
 	public enum GameLvelStage
 	{
 		Start,
@@ -102,8 +108,12 @@ public class ScoreManager : MonoBehaviour
 
 	void EnterFeverMode()
 	{
-		GameManager.instance.PlayerController.EnterFerev();
-		RestFeverSlider();
+		EnterFever.Raise();
+	}
+
+	public void ExitFeverMode()
+	{
+		ExitFever.Raise();
 	}
 	
 
@@ -130,17 +140,15 @@ public class ScoreManager : MonoBehaviour
 	void UptadeLevelStageToHalfWay()
 	{
 		currentLevelStage = GameLvelStage.HalfWay;
-		GameManager.instance.SceneManager.ActivateNextStage(1);
-		GameManager.instance.PlayerController.UpdatePlayerPosition();
-		GameManager.instance.akuController.UpdateAkuAkuPosToDown();
+
+		UpdateToMiddStage.Raise();
 	}
 
 	void UptadeLevelStageTolmosToWin()
 	{
-		currentLevelStage = GameLvelStage.AlmostToWin;		
-		GameManager.instance.SceneManager.ActivateNextStage(2);
-		GameManager.instance.PlayerController.UpdatePlayerPosition();
-		GameManager.instance.akuController.UpdateAkuAkuPosToDown();
+		currentLevelStage = GameLvelStage.AlmostToWin;
+
+		UpdateToFinalStage.Raise();		
 	}
 
 	void LevelWon()

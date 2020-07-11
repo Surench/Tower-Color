@@ -7,23 +7,25 @@ using UnityEngine.Events;
 public class GameManager : MonoBehaviour
 {
 	public static GameManager instance;
-
-	public ColorManager ColorManager;
-	public _SceneManager SceneManager;
-	public LevelManager LevelManager;
-	public DataManager DataManager;
-	public ScoreManager ScoreManager;
-	public PlayerController PlayerController;
-	public CameraController cameraController;
-	public AkuAkuController akuController;
+	public static bool isGameOver;
 
 	[SerializeField] UnityEvent StartGameEvent;
 	[SerializeField] UnityEvent GameOverEvent;
 	[SerializeField] UnityEvent LevelPassedEvent;
+	[SerializeField] GameObject menuPanel;
 
-	[SerializeField] GameObject menuPanel;	
+	public GameEvent InitNewGameLevelEvent;
+	public GameEvent LevelPassedGameEvent;
+	public GameEvent LevelLostGameEvent;
+
+	public ColorManager ColorManager;
+	public _SceneManager SceneManager;
+	public LevelManager LevelManager;
+	public ScoreManager ScoreManager;
+	public PlayerController PlayerController;
+	public CameraController cameraController;
+	public AkuAkuController akuController;	
 	
-	public static bool isGameOver;
 
 	private void Awake()
 	{
@@ -43,34 +45,27 @@ public class GameManager : MonoBehaviour
 
 	public void InitNewLevel()
 	{
+		isGameOver = false;
+
 		StartGameEvent.Invoke();
 
-		LevelManager.InitLevelManager(); //OK
-		ColorManager.InitColorManager(); //OK
-		ScoreManager.InitScoreManager(); //OK		
-		SceneManager.InitSceneManager(); //OK
-		akuController.InitAkuAku(); //OK
-
-		cameraController.InitCameraController(); //OK
-		PlayerController.InitPlayerController(); //OK
-
-		isGameOver = false;
+		InitNewGameLevelEvent.Raise();
 	}
 		
 	public void LevelWon()
 	{
 		LevelPassedEvent.Invoke();
-		LevelManager.LevelPassed();
-		cameraController.SetCameraWiningPos();
-		PlayerController.GameFinished();
-		akuController.LevelPasse();
+
+		LevelPassedGameEvent.Raise();		
 	}
 
 	public void LevelLost()
 	{
-		PlayerController.GameFinished();
 		isGameOver = true;
-		GameOverEvent.Invoke();		
+
+		GameOverEvent.Invoke();
+
+		LevelLostGameEvent.Raise();
 	}
 
 	

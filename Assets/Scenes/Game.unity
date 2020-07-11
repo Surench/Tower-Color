@@ -430,7 +430,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 2342854679246918010}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1893113305}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d8bf6ef58af7ca54fa90cf2e5f18eb98, type: 3}
@@ -764,6 +764,7 @@ GameObject:
   - component: {fileID: 202642455}
   - component: {fileID: 202642457}
   - component: {fileID: 202642458}
+  - component: {fileID: 202642456}
   m_Layer: 5
   m_Name: Ball icon Container
   m_TagString: Untagged
@@ -792,6 +793,51 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -43}
   m_SizeDelta: {x: 120, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &202642456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202642454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9de3b5c3054f8f540994ee067b597e1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventAndResponses:
+  - name: Enter Fever
+    gameEvent: {fileID: 11400000, guid: dbc6cbc183ba9114c8842f56dea7c156, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 202642458}
+          m_MethodName: EnteredFever
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - name: Exit Fever
+    gameEvent: {fileID: 11400000, guid: 1a6a6e45d70b92748b29e357ef42bed1, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 202642458}
+          m_MethodName: FeverExite
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!222 &202642457
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1123,6 +1169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 440574338}
   - component: {fileID: 440574340}
+  - component: {fileID: 440574339}
   m_Layer: 0
   m_Name: Camera Container
   m_TagString: Untagged
@@ -1146,6 +1193,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &440574339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440574337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9de3b5c3054f8f540994ee067b597e1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventAndResponses:
+  - name: Init Camera
+    gameEvent: {fileID: 11400000, guid: 47de4e207a2f6eb4e8ac44cde905afae, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 440574340}
+          m_MethodName: InitCameraController
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - name: Level Passed
+    gameEvent: {fileID: 11400000, guid: aa5c33c9b875d5d46819b3a9c93185ed, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 440574340}
+          m_MethodName: SetCameraWiningPos
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &440574340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2187,6 +2279,7 @@ GameObject:
   m_Component:
   - component: {fileID: 655051166}
   - component: {fileID: 655051165}
+  - component: {fileID: 655051167}
   m_Layer: 0
   m_Name: ColorManager
   m_TagString: Untagged
@@ -2239,6 +2332,35 @@ Transform:
   m_Father: {fileID: 1740155923}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &655051167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655051164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9de3b5c3054f8f540994ee067b597e1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventAndResponses:
+  - name: Init Color Manager
+    gameEvent: {fileID: 11400000, guid: 47de4e207a2f6eb4e8ac44cde905afae, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 655051165}
+          m_MethodName: InitColorManager
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &674322382
 GameObject:
   m_ObjectHideFlags: 0
@@ -2249,6 +2371,7 @@ GameObject:
   m_Component:
   - component: {fileID: 674322383}
   - component: {fileID: 674322384}
+  - component: {fileID: 674322385}
   m_Layer: 0
   m_Name: ScoreManager
   m_TagString: Untagged
@@ -2291,7 +2414,55 @@ MonoBehaviour:
   currLvlText: {fileID: 1592395608}
   nextLvlTex: {fileID: 1383574860}
   bulletAmountText: {fileID: 162946365}
+  UpdateToMiddStage: {fileID: 11400000, guid: d2c64a3d7ca557940b2535ea8c546762, type: 2}
+  UpdateToFinalStage: {fileID: 11400000, guid: 319eed665ea7a5346b891fa03f0b43e5, type: 2}
+  EnterFever: {fileID: 11400000, guid: dbc6cbc183ba9114c8842f56dea7c156, type: 2}
   currentLevelStage: 0
+--- !u!114 &674322385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674322382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9de3b5c3054f8f540994ee067b597e1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventAndResponses:
+  - name: Star New Level
+    gameEvent: {fileID: 11400000, guid: 47de4e207a2f6eb4e8ac44cde905afae, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 674322384}
+          m_MethodName: InitScoreManager
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - name: Enter Fever
+    gameEvent: {fileID: 11400000, guid: dbc6cbc183ba9114c8842f56dea7c156, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 674322384}
+          m_MethodName: RestFeverSlider
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2366,7 +2537,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 6.98e-43, y: 0, z: 0, w: 4.6e-44}
+  m_BoundingSphereOverride: {x: -6.4, y: 6, z: 1.7e-44, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -3494,6 +3665,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1107382268}
   - component: {fileID: 1107382267}
+  - component: {fileID: 1107382269}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -3584,6 +3756,67 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1107382269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107382266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9de3b5c3054f8f540994ee067b597e1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventAndResponses:
+  - name: Star New Level
+    gameEvent: {fileID: 11400000, guid: 47de4e207a2f6eb4e8ac44cde905afae, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1107382267}
+          m_MethodName: InitSceneManager
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - name: Go To Midd Stage
+    gameEvent: {fileID: 11400000, guid: d2c64a3d7ca557940b2535ea8c546762, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1107382267}
+          m_MethodName: ActivateNextStage
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - name: Go To Final Stage
+    gameEvent: {fileID: 11400000, guid: 319eed665ea7a5346b891fa03f0b43e5, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1107382267}
+          m_MethodName: ActivateNextStage
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 2
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1131276525
 GameObject:
   m_ObjectHideFlags: 0
@@ -3595,7 +3828,7 @@ GameObject:
   - component: {fileID: 1131276526}
   - component: {fileID: 1131276528}
   - component: {fileID: 1131276527}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4229,14 +4462,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c256a46ba9a84c48a97dd04227a1cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ColorManager: {fileID: 655051165}
-  SceneManager: {fileID: 1107382267}
-  LevelManager: {fileID: 1998031689}
-  DataManager: {fileID: 1610968502}
-  ScoreManager: {fileID: 674322384}
-  PlayerController: {fileID: 113373272}
-  cameraController: {fileID: 440574340}
-  akuController: {fileID: 1624911116}
   StartGameEvent:
     m_PersistentCalls:
       m_Calls:
@@ -4335,6 +4560,18 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   menuPanel: {fileID: 84782895}
+  InitNewGameLevelEvent: {fileID: 11400000, guid: 47de4e207a2f6eb4e8ac44cde905afae,
+    type: 2}
+  LevelPassedGameEvent: {fileID: 11400000, guid: aa5c33c9b875d5d46819b3a9c93185ed,
+    type: 2}
+  LevelLostGameEvent: {fileID: 11400000, guid: d8980d5942827d9419180b140c52a997, type: 2}
+  ColorManager: {fileID: 655051165}
+  SceneManager: {fileID: 1107382267}
+  LevelManager: {fileID: 1998031689}
+  ScoreManager: {fileID: 674322384}
+  PlayerController: {fileID: 113373272}
+  cameraController: {fileID: 440574340}
+  akuController: {fileID: 1624911116}
 --- !u!4 &1368635887
 Transform:
   m_ObjectHideFlags: 0
@@ -5658,6 +5895,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1624911117}
   - component: {fileID: 1624911116}
+  - component: {fileID: 1624911118}
   m_Layer: 0
   m_Name: Aku Aku Container
   m_TagString: Untagged
@@ -5702,6 +5940,83 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1624911118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624911115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9de3b5c3054f8f540994ee067b597e1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventAndResponses:
+  - name: Init Aku Aku
+    gameEvent: {fileID: 11400000, guid: 47de4e207a2f6eb4e8ac44cde905afae, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1624911116}
+          m_MethodName: InitAkuAku
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - name: Level Passed
+    gameEvent: {fileID: 11400000, guid: aa5c33c9b875d5d46819b3a9c93185ed, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1624911116}
+          m_MethodName: LevelPasse
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - name: Go To Midd Stage
+    gameEvent: {fileID: 11400000, guid: d2c64a3d7ca557940b2535ea8c546762, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1624911116}
+          m_MethodName: UpdateAkuAkuPosToDown
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - name: GoTo Final Stage
+    gameEvent: {fileID: 11400000, guid: 319eed665ea7a5346b891fa03f0b43e5, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1624911116}
+          m_MethodName: UpdateAkuAkuPosToDown
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1632802217
 GameObject:
   m_ObjectHideFlags: 0
@@ -6808,6 +7123,137 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1882087924}
   m_CullTransparentMesh: 0
+--- !u!1 &1893113305 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2342854679200669997, guid: 87343445567002c4f96b7368feab6f67,
+    type: 3}
+  m_PrefabInstance: {fileID: 2342854679246918010}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1893113308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893113305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9de3b5c3054f8f540994ee067b597e1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventAndResponses:
+  - name: Init Player
+    gameEvent: {fileID: 11400000, guid: 47de4e207a2f6eb4e8ac44cde905afae, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 113373272}
+          m_MethodName: InitPlayerController
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - name: Level Passed
+    gameEvent: {fileID: 11400000, guid: aa5c33c9b875d5d46819b3a9c93185ed, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 113373272}
+          m_MethodName: GameFinished
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - name: Level Lost
+    gameEvent: {fileID: 11400000, guid: d8980d5942827d9419180b140c52a997, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 113373272}
+          m_MethodName: GameFinished
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - name: Go To Midd Stage
+    gameEvent: {fileID: 11400000, guid: d2c64a3d7ca557940b2535ea8c546762, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 113373272}
+          m_MethodName: UpdatePlayerPosition
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - name: Go To Final Stage
+    gameEvent: {fileID: 11400000, guid: 319eed665ea7a5346b891fa03f0b43e5, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 113373272}
+          m_MethodName: UpdatePlayerPosition
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - name: Enter Fever
+    gameEvent: {fileID: 11400000, guid: dbc6cbc183ba9114c8842f56dea7c156, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 113373272}
+          m_MethodName: EnterFerev
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - name: Exit Fever
+    gameEvent: {fileID: 11400000, guid: 1a6a6e45d70b92748b29e357ef42bed1, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 113373272}
+          m_MethodName: EnterFerev
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &1901001959
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7229,6 +7675,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1998031690}
   - component: {fileID: 1998031689}
+  - component: {fileID: 1998031691}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -7267,6 +7714,67 @@ Transform:
   m_Father: {fileID: 1740155923}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1998031691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1998031688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9de3b5c3054f8f540994ee067b597e1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventAndResponses:
+  - name: Init Level
+    gameEvent: {fileID: 11400000, guid: 47de4e207a2f6eb4e8ac44cde905afae, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1998031689}
+          m_MethodName: InitLevelManager
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - name: Level Passed
+    gameEvent: {fileID: 11400000, guid: aa5c33c9b875d5d46819b3a9c93185ed, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1998031689}
+          m_MethodName: LevelPassed
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - name: LevelStageMidd
+    gameEvent: {fileID: 11400000, guid: aa5c33c9b875d5d46819b3a9c93185ed, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1998031689}
+          m_MethodName: LevelPassed
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &2027950501
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7875,6 +8383,12 @@ PrefabInstance:
       propertyPath: iconController
       value: 
       objectReference: {fileID: 202642458}
+    - target: {fileID: 2342854679200669986, guid: 87343445567002c4f96b7368feab6f67,
+        type: 3}
+      propertyPath: ExitFever
+      value: 
+      objectReference: {fileID: 11400000, guid: 1a6a6e45d70b92748b29e357ef42bed1,
+        type: 2}
     - target: {fileID: 2342854679200669987, guid: 87343445567002c4f96b7368feab6f67,
         type: 3}
       propertyPath: m_LocalPosition.x

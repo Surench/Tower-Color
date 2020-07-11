@@ -29,12 +29,13 @@ public class LevelManager : MonoBehaviour
 		   
 	public void InitLevelManager()
 	{
-		currentLevel = DataManager.GetLevelSettings().currentLevel;
 		AllLevelCalculation();
 	}
 
 	void AllLevelCalculation() // calculate flors amount , amo amount , colors amount
 	{
+		currentLevel = DataManager.GetLevelSettings().currentLevel;
+
 		//here game designer can count all configs for each lvl or every 5 lvl something gona change ..etc
 
 		if (currentLevel < 200) //0-200 lvls

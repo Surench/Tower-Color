@@ -72,7 +72,7 @@ public class BulletController : MonoBehaviour
 				if(!hitCan.isBlocked) hitCan.BallHits();
 
 				if (!isFeverBall) falesHit = true;
-				else GameManager.instance.PlayerController.ExiteFever();
+				else GameManager.instance.ScoreManager.ExitFeverMode();
 
 			}
 			else // rebound the bullet
