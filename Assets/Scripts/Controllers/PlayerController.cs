@@ -244,8 +244,7 @@ public class PlayerController : MonoBehaviour
 
 
 		if (allowRotate)
-			RotatePlayer(new Vector3(0, DeltaPosition.x/4
-				, 0));
+			RotatePlayer(new Vector3(0, DeltaPosition.x/3, 0));
 
 	}
 

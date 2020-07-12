@@ -127,7 +127,7 @@ public class ScoreManager : MonoBehaviour
 		{
 			UptadeLevelStageTolmosToWin();			
 		}
-		else if (levelSliderValue >= 0.9f) // Won
+		else if (levelSliderValue >= 0.91f) // Won
 		{
 			if (!GameManager.isGameOver)
 			{
