@@ -2346,7 +2346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventAndResponses:
   - name: Init Color Manager
-    gameEvent: {fileID: 11400000, guid: 47de4e207a2f6eb4e8ac44cde905afae, type: 2}
+    gameEvent: {fileID: 11400000, guid: 73cdff510c6bef047be60d6e9c21dbee, type: 2}
     response:
       m_PersistentCalls:
         m_Calls:
@@ -4463,6 +4463,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c256a46ba9a84c48a97dd04227a1cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InitNewGameLevelEvent: {fileID: 11400000, guid: 47de4e207a2f6eb4e8ac44cde905afae,
+    type: 2}
+  LevelPassedGameEvent: {fileID: 11400000, guid: aa5c33c9b875d5d46819b3a9c93185ed,
+    type: 2}
+  LevelLostGameEvent: {fileID: 11400000, guid: d8980d5942827d9419180b140c52a997, type: 2}
+  LevelAndColorGameEvent: {fileID: 11400000, guid: 73cdff510c6bef047be60d6e9c21dbee,
+    type: 2}
+  ColorManager: {fileID: 655051165}
+  SceneManager: {fileID: 1107382267}
+  LevelManager: {fileID: 1998031689}
+  ScoreManager: {fileID: 674322384}
+  PlayerController: {fileID: 113373272}
+  cameraController: {fileID: 440574340}
+  akuController: {fileID: 1624911116}
   StartGameEvent:
     m_PersistentCalls:
       m_Calls:
@@ -4561,18 +4575,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   menuPanel: {fileID: 84782895}
-  InitNewGameLevelEvent: {fileID: 11400000, guid: 47de4e207a2f6eb4e8ac44cde905afae,
-    type: 2}
-  LevelPassedGameEvent: {fileID: 11400000, guid: aa5c33c9b875d5d46819b3a9c93185ed,
-    type: 2}
-  LevelLostGameEvent: {fileID: 11400000, guid: d8980d5942827d9419180b140c52a997, type: 2}
-  ColorManager: {fileID: 655051165}
-  SceneManager: {fileID: 1107382267}
-  LevelManager: {fileID: 1998031689}
-  ScoreManager: {fileID: 674322384}
-  PlayerController: {fileID: 113373272}
-  cameraController: {fileID: 440574340}
-  akuController: {fileID: 1624911116}
 --- !u!4 &1368635887
 Transform:
   m_ObjectHideFlags: 0
@@ -7729,7 +7731,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventAndResponses:
   - name: Init Level
-    gameEvent: {fileID: 11400000, guid: 47de4e207a2f6eb4e8ac44cde905afae, type: 2}
+    gameEvent: {fileID: 11400000, guid: 73cdff510c6bef047be60d6e9c21dbee, type: 2}
     response:
       m_PersistentCalls:
         m_Calls:

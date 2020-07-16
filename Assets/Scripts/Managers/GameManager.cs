@@ -9,14 +9,11 @@ public class GameManager : MonoBehaviour
 	public static GameManager instance;
 	public static bool isGameOver;
 
-	[SerializeField] UnityEvent StartGameEvent;
-	[SerializeField] UnityEvent GameOverEvent;
-	[SerializeField] UnityEvent LevelPassedEvent;
-	[SerializeField] GameObject menuPanel;
 
 	public GameEvent InitNewGameLevelEvent;
 	public GameEvent LevelPassedGameEvent;
 	public GameEvent LevelLostGameEvent;
+	public GameEvent LevelAndColorGameEvent;
 
 	public ColorManager ColorManager;
 	public _SceneManager SceneManager;
@@ -24,9 +21,13 @@ public class GameManager : MonoBehaviour
 	public ScoreManager ScoreManager;
 	public PlayerController PlayerController;
 	public CameraController cameraController;
-	public AkuAkuController akuController;	
-	
+	public AkuAkuController akuController;
 
+
+	[SerializeField] UnityEvent StartGameEvent;
+	[SerializeField] UnityEvent GameOverEvent;
+	[SerializeField] UnityEvent LevelPassedEvent;
+	[SerializeField] GameObject menuPanel;
 	private void Awake()
 	{
 		instance = this;
@@ -48,6 +49,8 @@ public class GameManager : MonoBehaviour
 		isGameOver = false;
 
 		StartGameEvent.Invoke();
+
+		LevelAndColorGameEvent.Raise();
 
 		InitNewGameLevelEvent.Raise();
 	}

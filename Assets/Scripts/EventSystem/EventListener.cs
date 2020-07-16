@@ -54,9 +54,6 @@ public class EventListener : MonoBehaviour
 			// Check if the passed event is the correct one
 			if (passedEvent == eventAndResponses[i].gameEvent)
 			{
-				// Uncomment the line below for debugging the event listens and other details
-				//Debug.Log("Called Event named: " + eventAndResponses[i].name + " on GameObject: " + gameObject.name);
-
 				eventAndResponses[i].EventRaised();
 			}
 		}
